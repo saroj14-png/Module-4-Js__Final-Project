@@ -289,6 +289,22 @@ svg animation {
   justify-content: space-between;
   gap: 24px;
 }
+.search-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.spinner {
+  width: 32px;
+  height: 32px;
+  color: #6030b1;
+}
+.spinner svg {
+  width: 100%;
+  height: 100%;
+  animation: spin 1s linear infinite;
+}
 .car[data-v-53a4c488]::before {
     content: "";
     display: block;

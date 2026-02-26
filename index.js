@@ -4,10 +4,9 @@ const movieListEl = document.querySelector(".movie-list");
 const searchInput = document.querySelector(".search-input");
 const searchBtn = document.querySelector("#search-submit");
 const resultsHeadingEl = document.querySelector(".serch_results");
-const buildingImgEl = document.querySelector(".building");
+const spinnerEl = document.querySelector(".spinner");
 
 let activeRequestController = null;
-let debounceTimer = null;
 
 function setStatus(text) {
   if (resultsHeadingEl) resultsHeadingEl.textContent = text;
@@ -20,9 +19,9 @@ function setLoading(isLoading) {
   searchBtn.classList.toggle("not-loading", !isLoading);
 }
 
-function setLandingVisible(isVisible) {
-  if (!buildingImgEl) return;
-  buildingImgEl.classList.toggle("hidden", !isVisible);
+function setSpinnerVisible(isVisible) {
+  if (!spinnerEl) return;
+  spinnerEl.classList.toggle("hidden", !isVisible);
 }
 
 async function fetchMovies(query) {
@@ -33,7 +32,7 @@ async function fetchMovies(query) {
 
   setLoading(true);
   setStatus(`Searching for "${query}"...`);
-  setLandingVisible(false);
+  setSpinnerVisible(true);
 
   try {
     const response = await fetch(
@@ -44,7 +43,6 @@ async function fetchMovies(query) {
     if (!response.ok) {
       movieListEl.innerHTML = "<p>Something went wrong. Please try again.</p>";
       setStatus("Search");
-      setLandingVisible(true);
       return;
     }
 
@@ -58,15 +56,14 @@ async function fetchMovies(query) {
     } else {
       movieListEl.innerHTML = "<p>No results found</p>";
       setStatus(`No results for "${query}"`);
-      setLandingVisible(true);
     }
   } catch (err) {
     if (err?.name === "AbortError") return;
     movieListEl.innerHTML = "<p>Network error. Please try again.</p>";
     setStatus("Search");
-    setLandingVisible(true);
   } finally {
     setLoading(false);
+    setSpinnerVisible(false);
   }
 }
 
@@ -75,7 +72,7 @@ function runSearchNow() {
   if (!query) {
     if (movieListEl) movieListEl.innerHTML = "";
     setStatus("Search");
-    setLandingVisible(true);
+    setSpinnerVisible(false);
     return;
   }
   fetchMovies(query);
@@ -93,12 +90,6 @@ if (searchInput) {
     if (e.key !== "Enter") return;
     e.preventDefault();
     runSearchNow();
-  });
-
-  // Optional: still supports searching while typing, but debounced
-  searchInput.addEventListener("input", () => {
-    window.clearTimeout(debounceTimer);
-    debounceTimer = window.setTimeout(runSearchNow, 450);
   });
 }
 
