@@ -5,6 +5,7 @@ const searchInput = document.querySelector(".search-input");
 const searchBtn = document.querySelector("#search-submit");
 const resultsHeadingEl = document.querySelector(".serch_results");
 const spinnerEl = document.querySelector(".spinner");
+const emptyStateImgEl = document.querySelector(".building");
 
 let activeRequestController = null;
 
@@ -24,6 +25,11 @@ function setSpinnerVisible(isVisible) {
   spinnerEl.classList.toggle("hidden", !isVisible);
 }
 
+function setEmptyStateVisible(isVisible) {
+  if (!emptyStateImgEl) return;
+  emptyStateImgEl.classList.toggle("hidden", !isVisible);
+}
+
 async function fetchMovies(query) {
   if (!movieListEl) return;
 
@@ -33,6 +39,7 @@ async function fetchMovies(query) {
   setLoading(true);
   setStatus(`Searching for "${query}"...`);
   setSpinnerVisible(true);
+  setEmptyStateVisible(false);
 
   try {
     const response = await fetch(
@@ -53,14 +60,17 @@ async function fetchMovies(query) {
         "",
       );
       setStatus(`Results for "${query}"`);
+      setEmptyStateVisible(false);
     } else {
-      movieListEl.innerHTML = "<p>No results found</p>";
+      movieListEl.innerHTML = "";
       setStatus(`No results for "${query}"`);
+      setEmptyStateVisible(true);
     }
   } catch (err) {
     if (err?.name === "AbortError") return;
     movieListEl.innerHTML = "<p>Network error. Please try again.</p>";
     setStatus("Search");
+    setEmptyStateVisible(false);
   } finally {
     setLoading(false);
     setSpinnerVisible(false);
@@ -73,6 +83,7 @@ function runSearchNow() {
     if (movieListEl) movieListEl.innerHTML = "";
     setStatus("Search");
     setSpinnerVisible(false);
+    setEmptyStateVisible(true);
     return;
   }
   fetchMovies(query);
