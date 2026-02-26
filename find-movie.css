@@ -122,14 +122,27 @@ p {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap:10px;
+  gap:20px;
 }
-.movie-name, .movie-poster{
+.movie-name {
   margin: 0 auto;
   padding: 5px;
+  text-align: center;
+}
+p.movie-poster {
+  margin: 0 auto;
+  padding: 5px;
+  align-self: center;
+  display: flex;
   align-items: center;
   justify-content: center;
-  align-self: center;
+  min-height: 260px;
+}
+.movie-poster img {
+  display: block;
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
 }
 .movie-card {
   display: flex;
