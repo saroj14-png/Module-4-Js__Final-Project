@@ -50,7 +50,7 @@ i:hover {
 }
 .container {
   flex-direction: row;
-  max-width: 1200px;
+  min-width: 1200px;
   margin: 0 auto;
 }
 .link__hover-effect:after {
@@ -112,12 +112,11 @@ section__title {
 /* NAVIGATION BAR */
 .navbar {
   height: 165px;
-    display: flex;
-    align-items: center;
-    padding: 0 50px;
-    font-size: 18px;
-    font-weight: 600;
-  height: 165px;
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+  font-size: 18px;
+  font-weight: 600;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
@@ -221,12 +220,7 @@ input{
   font-size: 24px;
   padding-left: 25px;
 }
-button.not-loading {
-    border: 1px solid #6030b1;
-    background-color: #6030b1;
-    box-shadow: 7px 7px 14px rgba(134, 93, 204, .3);
-    cursor: pointer;
-}
+
 button{
   width: 200px;
   margin-left: 20px;
@@ -239,13 +233,21 @@ button.loading {
     background-color: #0a1f44;
     cursor: no-drop;
 }
+button.not-loading{
+    background-color: rgb(96, 48, 177);
+    box-shadow: rgba(134, 93, 204, 0.3) 7px 7px 14px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(96, 48, 177);
+    border-image: initial;
+}
 button:focus {
     outline: none;
 }
-svg:not(:root).svg-inline--fa {
+ svg:not(:root).svg-inline--fa {
     overflow: visible;
 }
-
 .svg-inline--fa.fa-w-16 {
     width: 1em;
 }
@@ -256,6 +258,7 @@ svg:not(:root).svg-inline--fa {
     overflow: visible;
     vertical-align: -0.125em;
 }
+
 
 @keyframes spin {
   to{
@@ -277,7 +280,74 @@ svg animation {
   bottom:0;
   transition: all 500ms ease;
 }
-/*}*/
+.img-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 32px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.car[data-v-53a4c488]::before {
+    content: "";
+    display: block;
+    padding-top: 39%;
+    max-width: 700px;
+    animation: 2s linear 0s infinite normal none running carmove-data-v-53a4c488;
+    background: url(../img/car.c936cfa6.png) 50% center / cover;
+}
+
+.car-wrapper[data-v-53a4c488] animation{
+    transform: translateX(0px);
+    z-index: 1000;
+    width: 100%;
+    transition: transform 2s ease-in-out;
+}
+/* FOOTER */
+footer {
+  background-color: #242424;
+}
+
+.footer__social--list {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 28px;
+}
+.footer__row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8% 0;
+}
+.footer__logo--img {
+  height: 40px;
+  width: 150px;
+}
+.footer__social--link,
+.footer__copyright,
+.footer__logo--popper {
+  color: #fff;
+}
+.footer__logo--popper {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  font-weight: 700;
+  opacity: 0;
+  transition: all 300ms ease;
+}
+.footer__anchor {
+  position: relative;
+  margin-bottom: 20px;
+}
+.footer__anchor:hover .footer__logo--popper {
+  transform: translateX(60px);
+  opacity: 1;
+}
 
 /*Small phones, tablets, large smartphones*/
 @media (max-width: 768px) {
