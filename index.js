@@ -6,8 +6,11 @@ const searchBtn = document.querySelector("#search-submit");
 const resultsHeadingEl = document.querySelector(".search_results");
 const spinnerEl = document.querySelector(".spinner");
 const emptyStateImgEl = document.querySelector(".building");
+const sortSelect = document.querySelector(".sort-select");
 
 let activeRequestController = null;
+let currentMovies = [];
+let currentSort = "title-asc";
 
 function setStatus(text) {
   if (resultsHeadingEl) resultsHeadingEl.textContent = text;
@@ -28,6 +31,49 @@ function setSpinnerVisible(isVisible) {
 function setEmptyStateVisible(isVisible) {
   if (!emptyStateImgEl) return;
   emptyStateImgEl.classList.toggle("hidden", !isVisible);
+}
+
+function getSortedMovies(movies, sortKey) {
+  const items = [...movies];
+
+  if (!items.length) return items;
+
+  switch (sortKey) {
+    case "title-asc":
+      items.sort((a, b) =>
+        (a.Title || "").toLowerCase().localeCompare((b.Title || "").toLowerCase()),
+      );
+      break;
+    case "title-desc":
+      items.sort((a, b) =>
+        (b.Title || "").toLowerCase().localeCompare((a.Title || "").toLowerCase()),
+      );
+      break;
+    case "year-desc":
+      items.sort((a, b) => {
+        const yearA = parseInt(a.Year, 10) || 0;
+        const yearB = parseInt(b.Year, 10) || 0;
+        return yearB - yearA;
+      });
+      break;
+    case "year-asc":
+      items.sort((a, b) => {
+        const yearA = parseInt(a.Year, 10) || 0;
+        const yearB = parseInt(b.Year, 10) || 0;
+        return yearA - yearB;
+      });
+      break;
+    default:
+      break;
+  }
+
+  return items;
+}
+
+function renderMovies() {
+  if (!movieListEl) return;
+  const sorted = getSortedMovies(currentMovies, currentSort);
+  movieListEl.innerHTML = sorted.map((movie) => moviesHTML(movie)).join("");
 }
 
 async function fetchMovies(query) {
@@ -56,12 +102,12 @@ async function fetchMovies(query) {
     const data = await response.json();
 
     if (data.Search?.length) {
-      movieListEl.innerHTML = data.Search.map((movie) => moviesHTML(movie)).join(
-        "",
-      );
+      currentMovies = data.Search.slice();
+      renderMovies();
       setStatus(`Results for "${query}"`);
       setEmptyStateVisible(false);
     } else {
+      currentMovies = [];
       movieListEl.innerHTML = "";
       setStatus(`No results for "${query}"`);
       setEmptyStateVisible(true);
@@ -80,6 +126,7 @@ async function fetchMovies(query) {
 function runSearchNow() {
   const query = searchInput?.value?.trim() ?? "";
   if (!query) {
+    currentMovies = [];
     if (movieListEl) movieListEl.innerHTML = "";
     setStatus("Search");
     setSpinnerVisible(false);
@@ -101,6 +148,14 @@ if (searchInput) {
     if (e.key !== "Enter") return;
     e.preventDefault();
     runSearchNow();
+  });
+}
+
+if (sortSelect) {
+  sortSelect.addEventListener("change", (e) => {
+    currentSort = e.target.value;
+    if (!currentMovies.length) return;
+    renderMovies();
   });
 }
 

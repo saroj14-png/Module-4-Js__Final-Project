@@ -87,6 +87,29 @@ input{
   display: flex;
   flex-direction: column;
 }
+.movie-controls {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 0 10px;
+  font-size: 14px;
+}
+.movie-controls label {
+  color: #242424;
+}
+.sort-select {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #6030b1;
+  font-size: 14px;
+  background-color: #fff;
+  color: #242424;
+  cursor: pointer;
+}
 p {
   font-size: 18px;
   word-break: break-word;

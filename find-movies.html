@@ -103,6 +103,15 @@
 </div>
 
 <div class="movie-container flex flex-1" id="movie-container">
+  <div class="movie-controls">
+    <label for="sort-select">Sort by:</label>
+    <select id="sort-select" class="sort-select">
+      <option value="title-asc">Alphabetical A to Z</option>
+      <option value="title-desc">Alphabetical Z to A</option>
+      <option value="year-desc">Newest to oldest (year)</option>
+      <option value="year-asc">Oldest to newest (year)</option>
+    </select>
+  </div>
   <div class="movie-list">
     <div class="movie">
       <!---<div class="movie-card">
