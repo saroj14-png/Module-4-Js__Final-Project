@@ -154,7 +154,6 @@ section__title {
 /*About me*/
 .container-wrapper {
   background-color: #f8f8f8;
- 
 }
 .about-me__info--container {
   display: flex;
@@ -238,8 +237,7 @@ button.not-loading{
     box-shadow: rgba(134, 93, 204, 0.3) 7px 7px 14px;
     cursor: pointer;
     border-width: 1px;
-    border-style: solid;
-    border-color: rgb(96, 48, 177);
+    border-style: none;
     border-image: initial;
 }
 button:focus {
@@ -258,7 +256,6 @@ button:focus {
     overflow: visible;
     vertical-align: -0.125em;
 }
-
 
 @keyframes spin {
   to{
