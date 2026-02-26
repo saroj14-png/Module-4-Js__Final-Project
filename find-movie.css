@@ -4,12 +4,26 @@ body{
     background-color: rgb(255, 255, 255);
 }
 .top-container__wrapper { 
+    position: relative;
+    overflow: hidden;
     background-size: cover;
     background-position: center;
     border-bottom: #6030b1 solid;
     margin: 0 auto;
+}
 
-  }
+.top-container__wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("assets/movies.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    filter: blur(8px);
+    transform: scale(1.05);
+    z-index: -1;
+}
 
  /* .overlay[data-v-390ceb07] {
     background-image: url("assets/movies.png");
