@@ -3,7 +3,7 @@
 const movieListEl = document.querySelector(".movie-list");
 const searchInput = document.querySelector(".search-input");
 const searchBtn = document.querySelector("#search-submit");
-const resultsHeadingEl = document.querySelector(".serch_results");
+const resultsHeadingEl = document.querySelector(".search_results");
 const spinnerEl = document.querySelector(".spinner");
 const emptyStateImgEl = document.querySelector(".building");
 

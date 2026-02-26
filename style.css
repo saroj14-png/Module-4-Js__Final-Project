@@ -48,9 +48,13 @@ i:hover {
 .justify-between {
     justify-content: space-between !important;
 }
+.justify-center {
+    justify-content: center !important;
+}
 .container {
   flex-direction: row;
-  min-width: 1200px;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 .link__hover-effect:after {
