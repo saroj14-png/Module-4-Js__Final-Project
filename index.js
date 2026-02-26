@@ -8,6 +8,7 @@ const spinnerEl = document.querySelector(".spinner");
 const emptyStateImgEl = document.querySelector(".building");
 const sortSelect = document.querySelector(".sort-select");
 const movieControlsEl = document.querySelector(".movie-controls");
+const movieContainerSpinnerEl = document.querySelector("#movie-container-spinner");
 
 let activeRequestController = null;
 let currentMovies = [];
@@ -27,6 +28,11 @@ function setLoading(isLoading) {
 function setSpinnerVisible(isVisible) {
   if (!spinnerEl) return;
   spinnerEl.classList.toggle("hidden", !isVisible);
+}
+
+function setMovieContainerSpinnerVisible(isVisible) {
+  if (!movieContainerSpinnerEl) return;
+  movieContainerSpinnerEl.classList.toggle("hidden", !isVisible);
 }
 
 function setEmptyStateVisible(isVisible) {
@@ -91,7 +97,9 @@ async function fetchMovies(query) {
   setLoading(true);
   setStatus(`Searching for "${query}"...`);
   setSpinnerVisible(true);
+  setMovieContainerSpinnerVisible(true);
   setEmptyStateVisible(false);
+  movieListEl.innerHTML = "";
 
   try {
     const response = await fetch(
@@ -131,6 +139,7 @@ async function fetchMovies(query) {
   } finally {
     setLoading(false);
     setSpinnerVisible(false);
+    setMovieContainerSpinnerVisible(false);
   }
 }
 
@@ -141,6 +150,7 @@ function runSearchNow() {
     if (movieListEl) movieListEl.innerHTML = "";
     setStatus("Search");
     setSpinnerVisible(false);
+    setMovieContainerSpinnerVisible(false);
     setEmptyStateVisible(true);
     updateMovieControlsVisibility();
     return;
