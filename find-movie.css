@@ -22,7 +22,12 @@ body{
     background-size: cover;
     filter: blur(8px);
     transform: scale(1.05);
-    z-index: -1;
+    z-index: 0;
+}
+
+.top-container__wrapper > * {
+    position: relative;
+    z-index: 1;
 }
 
  /* .overlay[data-v-390ceb07] {
