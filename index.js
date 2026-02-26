@@ -7,6 +7,7 @@ const resultsHeadingEl = document.querySelector(".search_results");
 const spinnerEl = document.querySelector(".spinner");
 const emptyStateImgEl = document.querySelector(".building");
 const sortSelect = document.querySelector(".sort-select");
+const movieControlsEl = document.querySelector(".movie-controls");
 
 let activeRequestController = null;
 let currentMovies = [];
@@ -31,6 +32,11 @@ function setSpinnerVisible(isVisible) {
 function setEmptyStateVisible(isVisible) {
   if (!emptyStateImgEl) return;
   emptyStateImgEl.classList.toggle("hidden", !isVisible);
+}
+
+function updateMovieControlsVisibility() {
+  if (!movieControlsEl) return;
+  movieControlsEl.classList.toggle("hidden", !currentMovies.length);
 }
 
 function getSortedMovies(movies, sortKey) {
@@ -96,6 +102,8 @@ async function fetchMovies(query) {
     if (!response.ok) {
       movieListEl.innerHTML = "<p>Something went wrong. Please try again.</p>";
       setStatus("Search");
+      currentMovies = [];
+      updateMovieControlsVisibility();
       return;
     }
 
@@ -112,11 +120,14 @@ async function fetchMovies(query) {
       setStatus(`No results for "${query}"`);
       setEmptyStateVisible(true);
     }
+    updateMovieControlsVisibility();
   } catch (err) {
     if (err?.name === "AbortError") return;
     movieListEl.innerHTML = "<p>Network error. Please try again.</p>";
     setStatus("Search");
     setEmptyStateVisible(false);
+    currentMovies = [];
+    updateMovieControlsVisibility();
   } finally {
     setLoading(false);
     setSpinnerVisible(false);
@@ -131,6 +142,7 @@ function runSearchNow() {
     setStatus("Search");
     setSpinnerVisible(false);
     setEmptyStateVisible(true);
+    updateMovieControlsVisibility();
     return;
   }
   fetchMovies(query);
