@@ -98,7 +98,7 @@ async function fetchMovies(query) {
   setStatus(`Searching for "${query}"...`);
   setSpinnerVisible(true);
   setMovieContainerSpinnerVisible(true);
-  setEmptyStateVisible(false);
+  // Keep empty state visible while loading - don't hide it immediately
   movieListEl.innerHTML = "";
 
   try {
@@ -111,6 +111,7 @@ async function fetchMovies(query) {
       movieListEl.innerHTML = "<p>Something went wrong. Please try again.</p>";
       setStatus("Search");
       currentMovies = [];
+      setEmptyStateVisible(true);
       updateMovieControlsVisibility();
       return;
     }
@@ -120,7 +121,7 @@ async function fetchMovies(query) {
     if (data.Search?.length) {
       currentMovies = data.Search.slice();
       renderMovies();
-      setStatus(`Results for "${query}"`);
+      setStatus(`Search results: "${query}"`);
       setEmptyStateVisible(false);
     } else {
       currentMovies = [];
@@ -133,7 +134,7 @@ async function fetchMovies(query) {
     if (err?.name === "AbortError") return;
     movieListEl.innerHTML = "<p>Network error. Please try again.</p>";
     setStatus("Search");
-    setEmptyStateVisible(false);
+    setEmptyStateVisible(true);
     currentMovies = [];
     updateMovieControlsVisibility();
   } finally {

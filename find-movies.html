@@ -103,7 +103,8 @@
 </div>
 
 <div class="movie-container flex flex-1" id="movie-container">
-  <div class="movie-container__spinner hidden" id="movie-container-spinner" aria-hidden="true">
+  <div class="content-wrapper">
+  <div class="movie-container__spinner hidden justify-center" id="movie-container-spinner" aria-hidden="true">
     <svg viewBox="0 0 512 512">
       <path
         fill="currentColor"
@@ -111,6 +112,7 @@
         21.49-48 48-48 48 21.49 48 48z"
       />
     </svg>
+  </div>
   </div>
   <div class="movie-controls hidden">
     <label for="sort-select">Sort by:</label>
@@ -121,6 +123,7 @@
       <option value="year-asc">Oldest to newest </option>
     </select>
   </div>
+
   <div class="movie-list">
     <div class="movie">
       <!---<div class="movie-card">
